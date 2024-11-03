@@ -6,7 +6,7 @@
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 15:20:29 by tjkruger          #+#    #+#             */
-/*   Updated: 2024/11/03 05:35:59 by tjkruger         ###   ########.fr       */
+/*   Updated: 2024/11/03 06:03:27 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,28 @@ int	ft_printf(const char *format, ...)
 		if (*format == '%')
 		{
 			format++;
-			if (*format == 'c')
-				chars_pr += ft_putchar_fd((char)va_arg(args, int));
-			else if (*format == 'd')
-				chars_pr += ft_putnbr_fd(va_arg(args, int));
-			else if (*format == 's')
-				chars_pr += ft_putstr(va_arg(args, char *));
-			else if (*format == 'x')
-				chars_pr += ft_puthex(va_arg(args, unsigned int), 0);
-			else if (*format == 'X')
-				chars_pr += ft_puthex(va_arg(args, unsigned int), 1);
-			else if (*format == '%')
-				chars_pr += ft_putchar('%');
+			chars_pr += handle_conversion(*format, args);
 		}
 		va_end(args);
 		return (0);
 	}
+}
+
+int	handle_conversion(char specifier, va_list args)
+{
+	if (specifier == 'c')
+		return (ft_putchar_fd(va_arg(args, int)));
+	else if (specifier == 's')
+		return (ft_putstr(va_arg(args, char *)));
+	else if (specifier == 'd' || specifier == 'i')
+		return (ft_putnbr_fd(va_arg(args, int)));
+	else if (specifier == 'u')
+		return (ft_putunsigned(va_arg(args, unsigned int)));
+	else if (specifier == 'x')
+		return (ft_puthex(va_arg(args, unsigned int), 0));
+	else if (specifier == 'X')
+		return (ft_puthex(va_arg(args, unsigned int), 1));
+	else if (specifier == '%')
+		return (ft_putchar('%'));
+	return (0);
 }

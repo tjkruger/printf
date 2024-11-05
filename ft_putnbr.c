@@ -1,41 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_puthex.c                                        :+:      :+:    :+:   */
+/*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/03 05:36:31 by tjkruger          #+#    #+#             */
-/*   Updated: 2024/11/05 15:30:44 by tjkruger         ###   ########.fr       */
+/*   Created: 2024/10/31 13:01:56 by tjkruger          #+#    #+#             */
+/*   Updated: 2024/11/05 15:51:47 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_puthex(unsigned int format, int uppercase)
+int	ft_putnbr(int n)
 {
-	char	*digits;
-	char	buffer[9];
-	int		i;
-	int		chars_pr;
+	char	digit;
 
-	i = 0;
-	chars_pr = 0;
-	if (uppercase)
-		digits = "123456789ABCDEF";
-	else
-		digits = "123456789abcdef";
-	if (format == 0)
+	if (n < 0)
 	{
-		chars_pr += ft_putchar('0');
-		return (chars_pr);
+		write(1, "-", 1);
+		if (n == -2147483648)
+			return (write(1, "2147483648", 10));
+		n = -n;
 	}
-	while (format > 0)
-	{
-		buffer[i++] = digits[format % 16];
-		format /= 16;
-	}
-	while (--i >= 0)
-		chars_pr += ft_putchar(buffer[i]);
-	return (chars_pr);
+	if (n >= 10)
+		ft_putnbr(n / 10);
+	digit = (n % 10) + '0';
+	return (write(1, &digit, 1));
 }

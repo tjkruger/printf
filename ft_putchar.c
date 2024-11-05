@@ -1,27 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr.c                                        :+:      :+:    :+:   */
+/*   ft_putchar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/31 14:06:40 by tjkruger          #+#    #+#             */
-/*   Updated: 2024/11/05 15:52:15 by tjkruger         ###   ########.fr       */
+/*   Created: 2024/10/31 12:50:21 by tjkruger          #+#    #+#             */
+/*   Updated: 2024/11/05 15:42:02 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_putstr(char *s)
+int	ft_putchar(char c)
 {
-	if (s == NULL)
-	{
-		return (0);
-	}
-	while (*s)
-	{
-		write(1, s, 1);
-		s++;
-	}
-	return (0);
+	return (write(1, &c, 1));
 }

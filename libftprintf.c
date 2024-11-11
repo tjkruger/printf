@@ -6,7 +6,7 @@
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 15:20:29 by tjkruger          #+#    #+#             */
-/*   Updated: 2024/11/08 18:25:13 by tjkruger         ###   ########.fr       */
+/*   Updated: 2024/11/11 14:06:51 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ int	handle_conversion(char specifier, va_list args, int *chars_pr)
 	else if (specifier == 'i' || specifier == 'd')
 		return (ft_putnbr(va_arg(args, int), chars_pr));
 	else if (specifier == 'p')
-		return (ft_putptr(va_arg(args, unsigned long), chars_pr));
+	{
+		ft_putstr("0x", chars_pr);
+		ft_puthex((unsigned long)va_arg(args, void *), 0, chars_pr);
+	}
 	else if (specifier == 'u')
 		return (ft_putunsigned(va_arg(args, unsigned int), chars_pr));
 	else if (specifier == 'x')
@@ -49,7 +52,10 @@ int	ft_printf(const char *format, ...)
 		if (*format == '%')
 		{
 			format++;
-			handle_conversion(*format, args, &chars_pr);
+			if (*format == '%')
+				ft_putchar('%', &chars_pr);
+			else
+				handle_conversion(*format, args, &chars_pr);
 		}
 		else
 		{

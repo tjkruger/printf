@@ -1,5 +1,10 @@
-
-SRCSFT_PRINTF = 
+SRCSFT_PRINTF = libftprintf.c \
+				ft_puthex.c \
+				ft_putstr.c \
+				ft_putnbr.c \
+				ft_putunsigned.c \
+				ft_putchar.c \
+				ft_putptr.c \
 
 
 
@@ -10,19 +15,15 @@ OBJ		= $(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 
 OBJDIR	= obj
 HEADER  = ft_printf.h
-NAME	= ft_printf.a
+NAME	= libftprintf.a
 CC		= cc
 CFLAGS	= -Wall -Wextra -Werror
 
-.PHONY: all clean fclean re
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
 	ar -rcs $(NAME) $(OBJ)
-
-bonus: $(NAME)
-	ar -rcs $(NAME)
 
 $(OBJDIR)/%.o: %.c $(HEADER) | $(OBJDIR)
 	$(CC) $(CFLAGS) -c $< -o $@ -I .
@@ -37,3 +38,6 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
+
+
+.PHONY: all clean fclean re
